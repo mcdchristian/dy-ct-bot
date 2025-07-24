@@ -5,8 +5,8 @@ This repository contains a GitHub Action that automatically makes commits twice 
 ## How it works
 
 1. The GitHub Action runs twice daily:
-   - At 7:00 AM UTC
-   - At 5:00 PM UTC
+   - At 5:00 AM UTC
+   - At 1:00 PM UTC
 2. Each run creates a new entry in `activity.log` with a timestamp
 3. The changes are automatically committed and pushed to your repository
 
