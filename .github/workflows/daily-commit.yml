@@ -32,6 +32,6 @@ jobs:
       - name: Commit and push
         run: |
           git add activity.log
-          git commit -S -m "🔁 Auto ping at $(date -u)" || echo "No changes to commit"
+          git commit -m "🔁 Auto ping at $(date -u)" || echo "No changes to commit"
           git pull --rebase origin main
           git push origin main
