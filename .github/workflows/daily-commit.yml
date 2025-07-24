@@ -1,38 +1,37 @@
-name: Daily Verified Commit
+name: Daily Commit
 
 on:
   schedule:
-    - cron: '23 7 * * 1-6'  # Random hour in morning Mon-Sat
-    - cron: '18 14 * * 1-6' # Random hour in afternoon Mon-Sat
+    # Du lundi au samedi, 2 commits par jour à des heures fixes (modifiables)
+    - cron: '23 9 * * 1-6'   # Random-like hour (11:23 AM UTC) → 13:23 CET
+    - cron: '47 14 * * 1-6'  # Random-like hour (2:47 PM UTC) → 16:47 CET
   workflow_dispatch:
 
 jobs:
   commit:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
-      - name: Checkout main branch
+      - name: Checkout the repo
         uses: actions/checkout@v3
         with:
-          token: ${{ secrets.GH_SIGNED_TOKEN }}
           fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Make a daily change
         run: |
-          echo "Ping at $(date -u)" >> activity.log
+          echo "Ping at: $(date -u)" >> activity.log
 
-      - name: Configure git
+      - name: Configure Git identity
         run: |
-          git config user.name "Cédric Karungu"
-          git config user.email "ckarungu921@gmail.com"
-          git config commit.gpgsign true
-          git config user.signingkey "Cédric Karungu"
+          git config --global user.name "Cedric921"
+          git config --global user.email "ckarungu921@gmail.com"
 
       - name: Commit and push
-        env:
-          GH_TOKEN: ${{ secrets.GH_SIGNED_TOKEN }}
         run: |
-          git pull --rebase origin main
           git add activity.log
           git commit -S -m "🔁 Auto ping at $(date -u)" || echo "No changes to commit"
+          git pull --rebase origin main
           git push origin main
