@@ -26,8 +26,8 @@ jobs:
 
       - name: Configure Git identity
         run: |
-          git config --global user.name "Cedric921"
-          git config --global user.email "ckarungu921@gmail.com"
+          git config --global user.name "mcdchristian"
+          git config --global user.email "mcdchristian4@gmail.com"
 
       - name: Commit and push
         run: |
